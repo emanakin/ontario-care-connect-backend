@@ -12,11 +12,11 @@ load_dotenv()
 SECRET_KEY = os.getenv("JWT_SECRET", "fallback-secret-key")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60  
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     is_valid = pwd_context.verify(plain_password, hashed_password)
-    logger.debug(f"Verifying password: {plain_password} against hash: {hashed_password} - Valid: {is_valid}")
     return is_valid
 
 def get_password_hash(password: str) -> str:

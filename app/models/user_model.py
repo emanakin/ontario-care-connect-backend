@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, Enum as SQLAlchemyEnum
+from sqlalchemy import Column, Integer, String, Text, Boolean, Enum as SQLAlchemyEnum
 from sqlalchemy.orm import relationship
 from app.database import Base
 import enum
@@ -13,7 +13,7 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True, nullable=False)
-    hashed_password = Column(String, nullable=False)
+    hashed_password = Column(Text, nullable=False)
     full_name = Column(String)
     role = Column(SQLAlchemyEnum(UserRole), nullable=False)
     is_active = Column(Boolean, default=True)

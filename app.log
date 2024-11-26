@@ -369,3 +369,152 @@ WHERE users.email = $1::VARCHAR
 2024-11-25 20:12:03,109 [DEBUG] app.logging_config: Verifying password: securepassword against hash: $2b$12$cmOBQpyu3YMmYPlfzyA.AuExiFUWVaRWuPWHFOoUjFPFnAhQKZP8a - Valid: False
 2024-11-25 20:12:03,109 [WARNING] app.logging_config: Login failed: Incorrect email or password.
 2024-11-25 20:12:03,110 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2024-11-25 21:57:02,747 [DEBUG] passlib.registry: registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2024-11-26 06:14:53,690 [DEBUG] passlib.registry: registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2024-11-26 06:15:00,405 [DEBUG] passlib.registry: registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2024-11-26 06:16:19,876 [DEBUG] passlib.registry: registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2024-11-26 06:17:13,343 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2024-11-26 06:17:13,345 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2024-11-26 06:17:13,349 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2024-11-26 06:17:13,350 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2024-11-26 06:17:13,354 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2024-11-26 06:17:13,356 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2024-11-26 06:17:13,360 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2024-11-26 06:17:13,365 [INFO] sqlalchemy.engine.Engine: SELECT users.id, users.email, users.hashed_password, users.full_name, users.role, users.is_active 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2024-11-26 06:17:13,367 [INFO] sqlalchemy.engine.Engine: [generated in 0.00166s] ('user@example.com',)
+2024-11-26 06:17:13,428 [DEBUG] passlib.handlers.argon2: detected 'argon2_cffi' backend, version '23.1.0', with support for 0x13 argon2 hashes
+2024-11-26 06:17:13,768 [INFO] sqlalchemy.engine.Engine: INSERT INTO users (email, hashed_password, full_name, role, is_active) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::userrole, $5::BOOLEAN) RETURNING users.id
+2024-11-26 06:17:13,769 [INFO] sqlalchemy.engine.Engine: [generated in 0.00159s] ('user@example.com', '$argon2id$v=19$m=65536,t=3,p=4$8b63VspZizGGcC7lfC+lVA$na6A2eMuKljDYzFkWjV6FQPNV1lTg8z4zEEz/uxHkj8', 'John Doe', 'customer', True)
+2024-11-26 06:17:13,772 [INFO] sqlalchemy.engine.Engine: COMMIT
+2024-11-26 06:17:13,783 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2024-11-26 06:17:13,788 [INFO] sqlalchemy.engine.Engine: SELECT users.id, users.email, users.hashed_password, users.full_name, users.role, users.is_active 
+FROM users 
+WHERE users.id = $1::INTEGER
+2024-11-26 06:17:13,793 [INFO] sqlalchemy.engine.Engine: [generated in 0.00569s] (5,)
+2024-11-26 06:17:13,803 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2024-11-26 06:17:19,165 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2024-11-26 06:17:19,166 [INFO] sqlalchemy.engine.Engine: SELECT users.id, users.email, users.hashed_password, users.full_name, users.role, users.is_active 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2024-11-26 06:17:19,168 [INFO] sqlalchemy.engine.Engine: [cached since 5.803s ago] ('user@example.com',)
+2024-11-26 06:17:19,170 [DEBUG] app.logging_config: User found: user@example.com, Hashed password in DB: $argon2id$v=19$m=65536,t=3,p=4$8b63VspZizGGcC7lfC+lVA$na6A2eMuKljDYzFkWjV6FQPNV1lTg8z4zEEz/uxHkj8
+2024-11-26 06:17:19,356 [DEBUG] app.logging_config: Verifying password: securepassword against hash: $argon2id$v=19$m=65536,t=3,p=4$8b63VspZizGGcC7lfC+lVA$na6A2eMuKljDYzFkWjV6FQPNV1lTg8z4zEEz/uxHkj8 - Valid: False
+2024-11-26 06:17:19,357 [WARNING] app.logging_config: Login failed: Incorrect email or password.
+2024-11-26 06:17:19,357 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2024-11-26 06:23:51,722 [DEBUG] passlib.registry: registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2024-11-26 06:25:43,462 [DEBUG] passlib.registry: registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2024-11-26 06:27:54,849 [DEBUG] passlib.registry: registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2024-11-26 06:33:46,796 [DEBUG] passlib.registry: registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2024-11-26 06:33:52,905 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2024-11-26 06:33:52,906 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2024-11-26 06:33:52,909 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2024-11-26 06:33:52,909 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2024-11-26 06:33:52,912 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2024-11-26 06:33:52,914 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2024-11-26 06:33:52,917 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2024-11-26 06:33:52,921 [INFO] sqlalchemy.engine.Engine: SELECT users.id, users.email, users.hashed_password, users.full_name, users.role, users.is_active 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2024-11-26 06:33:52,922 [INFO] sqlalchemy.engine.Engine: [generated in 0.00142s] ('user@example.com',)
+2024-11-26 06:33:52,958 [DEBUG] passlib.handlers.argon2: detected 'argon2_cffi' backend, version '23.1.0', with support for 0x13 argon2 hashes
+2024-11-26 06:33:53,204 [INFO] sqlalchemy.engine.Engine: INSERT INTO users (email, hashed_password, full_name, role, is_active) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::userrole, $5::BOOLEAN) RETURNING users.id
+2024-11-26 06:33:53,205 [INFO] sqlalchemy.engine.Engine: [generated in 0.00113s] ('user@example.com', '$argon2id$v=19$m=65536,t=3,p=4$+J/T2ptTSiml1FoLoXQOoQ$dbuI/6exJ64EaNxUgb0xNPpHWT6KGOSAfRT9Ero9AOY', 'John Doe', 'customer', True)
+2024-11-26 06:33:53,209 [INFO] sqlalchemy.engine.Engine: COMMIT
+2024-11-26 06:33:53,215 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2024-11-26 06:33:53,218 [INFO] sqlalchemy.engine.Engine: SELECT users.id, users.email, users.hashed_password, users.full_name, users.role, users.is_active 
+FROM users 
+WHERE users.id = $1::INTEGER
+2024-11-26 06:33:53,219 [INFO] sqlalchemy.engine.Engine: [generated in 0.00185s] (6,)
+2024-11-26 06:33:53,225 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2024-11-26 06:33:59,723 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2024-11-26 06:33:59,724 [INFO] sqlalchemy.engine.Engine: SELECT users.id, users.email, users.hashed_password, users.full_name, users.role, users.is_active 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2024-11-26 06:33:59,726 [INFO] sqlalchemy.engine.Engine: [cached since 6.805s ago] ('user@example.com',)
+2024-11-26 06:33:59,727 [DEBUG] app.logging_config: User found: user@example.com, Hashed password in DB: '$argon2id$v=19$m=65536,t=3,p=4$+J/T2ptTSiml1FoLoXQOoQ$dbuI/6exJ64EaNxUgb0xNPpHWT6KGOSAfRT9Ero9AOY'
+2024-11-26 06:33:59,848 [DEBUG] app.logging_config: Verifying password: securepassword against hash: $argon2id$v=19$m=65536,t=3,p=4$+J/T2ptTSiml1FoLoXQOoQ$dbuI/6exJ64EaNxUgb0xNPpHWT6KGOSAfRT9Ero9AOY - Valid: False
+2024-11-26 06:33:59,849 [WARNING] app.logging_config: Login failed: Incorrect email or password.
+2024-11-26 06:33:59,849 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2024-11-26 06:36:51,310 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2024-11-26 06:36:51,312 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2024-11-26 06:36:51,316 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2024-11-26 06:36:51,317 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2024-11-26 06:36:51,320 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2024-11-26 06:36:51,321 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2024-11-26 06:36:51,324 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2024-11-26 06:36:51,328 [INFO] sqlalchemy.engine.Engine: SELECT users.id, users.email, users.hashed_password, users.full_name, users.role, users.is_active 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2024-11-26 06:36:51,334 [INFO] sqlalchemy.engine.Engine: [generated in 0.00603s] ('user@example.com',)
+2024-11-26 06:36:51,501 [DEBUG] app.logging_config: Hashing password with argon2-cffi: 'securepassword' -> $argon2id$v=19$m=65536,t=3,p=4$NqUczSG8gZmCm4kIw1/Qyg$YhJMTiR0yWUCBz2Pauei4JiIuADV+wGetzlnkuC9J2o
+2024-11-26 06:36:51,632 [DEBUG] app.logging_config: Hashing password with argon2-cffi: '$argon2id$v=19$m=65536,t=3,p=4$NqUczSG8gZmCm4kIw1/Qyg$YhJMTiR0yWUCBz2Pauei4JiIuADV+wGetzlnkuC9J2o' -> $argon2id$v=19$m=65536,t=3,p=4$rw7pAsh+WGBflceQzOTmOw$FevcYOO4/6YQKrpQ9PY/3qlXG/NrJqoLXPocdcIU9x4
+2024-11-26 06:36:51,635 [INFO] sqlalchemy.engine.Engine: INSERT INTO users (email, hashed_password, full_name, role, is_active) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::userrole, $5::BOOLEAN) RETURNING users.id
+2024-11-26 06:36:51,636 [INFO] sqlalchemy.engine.Engine: [generated in 0.00106s] ('user@example.com', '$argon2id$v=19$m=65536,t=3,p=4$rw7pAsh+WGBflceQzOTmOw$FevcYOO4/6YQKrpQ9PY/3qlXG/NrJqoLXPocdcIU9x4', 'John Doe', 'customer', True)
+2024-11-26 06:36:51,640 [INFO] sqlalchemy.engine.Engine: COMMIT
+2024-11-26 06:36:51,645 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2024-11-26 06:36:51,653 [INFO] sqlalchemy.engine.Engine: SELECT users.id, users.email, users.hashed_password, users.full_name, users.role, users.is_active 
+FROM users 
+WHERE users.id = $1::INTEGER
+2024-11-26 06:36:51,654 [INFO] sqlalchemy.engine.Engine: [generated in 0.00129s] (7,)
+2024-11-26 06:36:51,658 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2024-11-26 06:36:55,393 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2024-11-26 06:36:55,394 [INFO] sqlalchemy.engine.Engine: SELECT users.id, users.email, users.hashed_password, users.full_name, users.role, users.is_active 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2024-11-26 06:36:55,395 [INFO] sqlalchemy.engine.Engine: [cached since 4.067s ago] ('user@example.com',)
+2024-11-26 06:36:55,397 [DEBUG] app.logging_config: User found: user@example.com, Hashed password in DB: '$argon2id$v=19$m=65536,t=3,p=4$rw7pAsh+WGBflceQzOTmOw$FevcYOO4/6YQKrpQ9PY/3qlXG/NrJqoLXPocdcIU9x4'
+2024-11-26 06:36:55,563 [DEBUG] app.logging_config: Password verification failed
+2024-11-26 06:36:55,563 [WARNING] app.logging_config: Login failed: Incorrect email or password.
+2024-11-26 06:36:55,564 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2024-11-26 06:51:45,404 [DEBUG] passlib.registry: registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2024-11-26 06:52:14,607 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2024-11-26 06:52:14,609 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2024-11-26 06:52:14,613 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2024-11-26 06:52:14,614 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2024-11-26 06:52:14,617 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2024-11-26 06:52:14,619 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2024-11-26 06:52:14,621 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2024-11-26 06:52:14,628 [INFO] sqlalchemy.engine.Engine: SELECT users.id, users.email, users.hashed_password, users.full_name, users.role, users.is_active 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2024-11-26 06:52:14,629 [INFO] sqlalchemy.engine.Engine: [generated in 0.00181s] ('user@example.com',)
+2024-11-26 06:52:14,672 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2024-11-26 06:52:39,855 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2024-11-26 06:52:39,856 [INFO] sqlalchemy.engine.Engine: SELECT users.id, users.email, users.hashed_password, users.full_name, users.role, users.is_active 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2024-11-26 06:52:39,857 [INFO] sqlalchemy.engine.Engine: [cached since 25.23s ago] ('user@example.com',)
+2024-11-26 06:52:39,859 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2024-11-26 06:53:17,101 [DEBUG] passlib.registry: registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2024-11-26 06:53:46,274 [INFO] sqlalchemy.engine.Engine: select pg_catalog.version()
+2024-11-26 06:53:46,275 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2024-11-26 06:53:46,278 [INFO] sqlalchemy.engine.Engine: select current_schema()
+2024-11-26 06:53:46,279 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2024-11-26 06:53:46,282 [INFO] sqlalchemy.engine.Engine: show standard_conforming_strings
+2024-11-26 06:53:46,283 [INFO] sqlalchemy.engine.Engine: [raw sql] ()
+2024-11-26 06:53:46,289 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2024-11-26 06:53:46,292 [INFO] sqlalchemy.engine.Engine: SELECT users.id, users.email, users.hashed_password, users.full_name, users.role, users.is_active 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2024-11-26 06:53:46,293 [INFO] sqlalchemy.engine.Engine: [generated in 0.00108s] ('user@example.com',)
+2024-11-26 06:53:46,341 [DEBUG] passlib.handlers.argon2: detected 'argon2_cffi' backend, version '23.1.0', with support for 0x13 argon2 hashes
+2024-11-26 06:53:46,469 [INFO] sqlalchemy.engine.Engine: INSERT INTO users (email, hashed_password, full_name, role, is_active) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::userrole, $5::BOOLEAN) RETURNING users.id
+2024-11-26 06:53:46,471 [INFO] sqlalchemy.engine.Engine: [generated in 0.00191s] ('user@example.com', '$argon2id$v=19$m=65536,t=3,p=4$zdmbMwYghFAqxVgLwVhrLQ$VwCiEThjW8Q93L6E8B2hfk38CV4V9I2Aj95zEtZCEzc', 'John Doe', 'customer', True)
+2024-11-26 06:53:46,475 [INFO] sqlalchemy.engine.Engine: COMMIT
+2024-11-26 06:53:46,481 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2024-11-26 06:53:46,484 [INFO] sqlalchemy.engine.Engine: SELECT users.id, users.email, users.hashed_password, users.full_name, users.role, users.is_active 
+FROM users 
+WHERE users.id = $1::INTEGER
+2024-11-26 06:53:46,489 [INFO] sqlalchemy.engine.Engine: [generated in 0.00452s] (8,)
+2024-11-26 06:53:46,493 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2024-11-26 06:53:51,053 [INFO] sqlalchemy.engine.Engine: BEGIN (implicit)
+2024-11-26 06:53:51,055 [INFO] sqlalchemy.engine.Engine: SELECT users.id, users.email, users.hashed_password, users.full_name, users.role, users.is_active 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2024-11-26 06:53:51,058 [INFO] sqlalchemy.engine.Engine: [cached since 4.765s ago] ('user@example.com',)
+2024-11-26 06:53:51,060 [DEBUG] app.logging_config: User found: user@example.com, Hashed password in DB: '$argon2id$v=19$m=65536,t=3,p=4$zdmbMwYghFAqxVgLwVhrLQ$VwCiEThjW8Q93L6E8B2hfk38CV4V9I2Aj95zEtZCEzc'
+2024-11-26 06:53:51,186 [DEBUG] app.logging_config: Verifying password: securepassword against hash: $argon2id$v=19$m=65536,t=3,p=4$zdmbMwYghFAqxVgLwVhrLQ$VwCiEThjW8Q93L6E8B2hfk38CV4V9I2Aj95zEtZCEzc - Valid: True
+2024-11-26 06:53:51,212 [INFO] sqlalchemy.engine.Engine: ROLLBACK
+2024-11-26 11:38:57,508 [DEBUG] passlib.registry: registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>

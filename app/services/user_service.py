@@ -27,10 +27,10 @@ class UserService:
     
     async def login(self, login_request: LoginRequest) -> Token:
         user = await get_user_by_email(self.db, login_request.username)
-        logger.debug(f"User found: {user.email}, Hashed password in DB: {user.hashed_password}")
+        logger.debug(f"User found: {user.email}, Hashed password in DB: {repr(user.hashed_password)}")
         if not user or not verify_password(login_request.password, user.hashed_password):
             raise InvalidCredentialsException()
-        if user.role == "caregiver" and not user.is_approved:
+        if user.role == "caregiver" and not user.is_approved: # will implement for caregiver users
             raise UnapprovedCaregiverException()
         access_token = create_access_token(
             data={"sub": user.email, "role": user.role}
