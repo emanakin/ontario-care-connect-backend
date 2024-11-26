@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+asyncpg
+databases[postgresql]
+pydantic
+alembic
+python-dotenv
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart  # For form data handling
+pydantic
+pydantic[email]
+psycopg2-binary
+bcrypt==4.0.1
