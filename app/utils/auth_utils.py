@@ -1,3 +1,4 @@
+from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from datetime import datetime, timedelta
 from typing import Optional
 from jose import JWTError, jwt
@@ -6,6 +7,8 @@ from passlib.context import CryptContext
 from dotenv import load_dotenv
 import os
 from app.logging_config import logger
+import secrets
+from pydantic import EmailStr
 
 load_dotenv()
 
@@ -14,6 +17,18 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60  
 
 pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
+
+conf = ConnectionConfig(
+    MAIL_USERNAME=os.getenv("MAIL_USERNAME"),
+    MAIL_PASSWORD=os.getenv("MAIL_PASSWORD"),
+    MAIL_FROM=os.getenv("MAIL_FROM"),
+    MAIL_PORT=os.getenv("MAIL_PORT"),
+    MAIL_SERVER=os.getenv("MAIL_SERVER"),
+    MAIL_STARTTLS=True,
+    MAIL_SSL_TLS=False,
+    USE_CREDENTIALS=True,
+    VALIDATE_CERTS=True
+)
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     is_valid = pwd_context.verify(plain_password, hashed_password)
@@ -34,3 +49,18 @@ def decode_access_token(token: str):
         return payload
     except JWTError as e:
         raise InvalidTokenException(detail=str(e))
+    
+def generate_verification_token():
+    logger.info("Generating verifcation token")
+    return secrets.token_urlsafe(32)
+
+async def send_verification_email(email: EmailStr, token: str):
+    verification_link = f"http://yourdomain.com/verify-email?token={token}"
+    message = MessageSchema(
+        subject="Verify your email",
+        recipients=[email],
+        body=f"Please verify your email by clicking on the following link: {verification_link}",
+        subtype="plain"
+    )
+    fm = FastMail(conf)
+    await fm.send_message(message)

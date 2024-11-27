@@ -5,7 +5,9 @@ from app.auth.exceptions import (
     InvalidRoleException,
     InvalidCredentialsException,
     UnapprovedCaregiverException,
-    InvalidTokenException
+    InvalidTokenException,
+    EmailAlreadyVerifiedException,
+    UserNotFoundException
 )
 from app.logging_config import logger
 
@@ -28,3 +30,11 @@ async def invalid_token_handler(request: Request, exc: InvalidTokenException):
 async def unapproved_caregiver_handler(request: Request, exc: UnapprovedCaregiverException):
     logger.warning(f"Unapproved caregiver login attempt: {exc}")
     return JSONResponse(status_code=403, content={"detail": str(exc)})
+
+async def email_already_verified_handler(request: Request, exc: EmailAlreadyVerifiedException):
+    logger.warning(f"Email already verified: {exc.detail}")
+    return JSONResponse(status_code=400, content={"detail": exc.detail})
+
+async def user_not_found_handler(request: Request, exc: UserNotFoundException):
+    logger.warning(f"User not found: {exc.detail}")
+    return JSONResponse(status_code=404, content={"detail": exc.detail})

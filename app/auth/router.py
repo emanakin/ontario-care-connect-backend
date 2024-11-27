@@ -1,5 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi.security import OAuth2PasswordRequestForm
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.schemas.user_schemas import UserCreate, UserResponse, LoginRequest
 from app.auth.exceptions import UserAlreadyExistsException, UnapprovedCaregiverException, InvalidRoleException, InvalidCredentialsException
@@ -41,3 +40,22 @@ async def login(
     except (InvalidCredentialsException, UnapprovedCaregiverException) as e:
         logger.warning(f"Login failed: {e}")
         raise HTTPException(status_code=401, detail=str(e))
+    
+@router.get("/verify-email")
+async def verify_email(
+    token: str, 
+    db: AsyncSession = Depends(get_db)
+):
+    service = UserService(db)
+    await service.verify_email(token)
+    return {"detail": "Email verified successfully"}
+
+@router.post("/resend-verification")
+async def resend_verification(
+    email: str = Query(...),
+    db: AsyncSession = Depends(get_db)
+):
+    service = UserService(db)
+    await service.resend_verification_email(email)
+    return {"detail": "Verification email resent"}
+

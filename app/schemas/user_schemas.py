@@ -18,11 +18,12 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     password: str = Field(..., min_length=8)
     role: UserRole
+    is_verified: bool
 
 class UserResponse(UserBase):
     id: int
     role: UserRole
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
