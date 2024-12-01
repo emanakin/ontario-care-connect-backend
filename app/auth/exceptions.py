@@ -27,7 +27,14 @@ class EmailAlreadyVerifiedException(Exception):
         super().__init__(self.detail)
 
 class UserNotFoundException(Exception):
-    """Raised when the specified user is not found."""
-    def __init__(self, detail: str = "User not found"):
-        self.detail = detail
-        super().__init__(self.detail)
+    def __init__(self, email: str):
+        self.email = email
+        super().__init__(f"User with email '{email}' not found.")
+
+class InvalidAuthProviderException(Exception):
+    def __init__(self, message: str = "Invalid authentication provider."):
+        super().__init__(message)
+
+class EmailNotVerifiedException(Exception):
+    def __init__(self, message: str = "Email address is not verified."):
+        super().__init__(message)

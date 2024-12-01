@@ -1,11 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Body, Depends, HTTPException, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.schemas.user_schemas import UserCreate, UserResponse, LoginRequest
-from app.auth.exceptions import UserAlreadyExistsException, UnapprovedCaregiverException, InvalidRoleException, InvalidCredentialsException
+from app.auth.exceptions import *
 from app.services.user_service import UserService
 from app.database import get_db
 from app.schemas.token_schemas import Token
 from app.logging_config import logger
+from app.auth.oauth import oauth
+from starlette.responses import RedirectResponse
 
 router = APIRouter(
     prefix="/auth",
@@ -59,3 +61,59 @@ async def resend_verification(
     await service.resend_verification_email(email)
     return {"detail": "Verification email resent"}
 
+@router.post("/forgot-password")
+async def forgot_password(
+    email: str = Body(..., embed=True),
+    db: AsyncSession = Depends(get_db)
+):
+    service = UserService(db)
+    try:
+        await service.request_password_reset(email)
+        return {"detail": "Password reset link sent to your email"}
+    except Exception as e:
+        logger.error(f"Unexpected error during password reset request: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+
+@router.post("/reset-password")
+async def reset_password(
+    token: str = Body(..., embed=True),
+    new_password: str = Body(..., embed=True),
+    db: AsyncSession = Depends(get_db)
+):
+    service = UserService(db)
+    try:
+        await service.reset_password(token, new_password)
+        return {"detail": "Password reset successful"}
+    except Exception as e:
+        logger.error(f"Unexpected error during password reset request: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+
+@router.get('/google')
+async def auth_google(request: Request):
+    redirect_uri = request.url_for('auth_google_callback')
+    return await oauth.google.authorize_redirect(request, redirect_uri)
+
+@router.get('/facebook')
+async def auth_facebook(request: Request):
+    redirect_uri = request.url_for('auth_facebook_callback')
+    return await oauth.facebook.authorize_redirect(request, redirect_uri)
+
+@router.get('/google/callback')
+async def auth_google_callback(request: Request, db: AsyncSession = Depends(get_db)):
+    service = UserService(db)
+    try:
+        token = await service.authenticate_with_google(request)
+        return token
+    except Exception as e:
+        logger.error(f"Google authentication failed: {e}")
+        raise HTTPException(status_code=400, detail="Google authentication failed")
+
+@router.get('/facebook/callback')
+async def auth_facebook_callback(request: Request, db: AsyncSession = Depends(get_db)):
+    service = UserService(db)
+    try:
+        token = await service.authenticate_with_facebook(request)
+        return token
+    except Exception as e:
+        logger.error(f"Facebook authentication failed: {e}")
+        raise HTTPException(status_code=400, detail="Facebook authentication failed")

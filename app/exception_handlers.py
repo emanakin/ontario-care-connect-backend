@@ -1,14 +1,6 @@
 from fastapi import Request, HTTPException
 from fastapi.responses import JSONResponse
-from app.auth.exceptions import (
-    UserAlreadyExistsException,
-    InvalidRoleException,
-    InvalidCredentialsException,
-    UnapprovedCaregiverException,
-    InvalidTokenException,
-    EmailAlreadyVerifiedException,
-    UserNotFoundException
-)
+from app.auth.exceptions import *
 from app.logging_config import logger
 
 async def user_already_exists_handler(request: Request, exc: UserAlreadyExistsException):
@@ -38,3 +30,11 @@ async def email_already_verified_handler(request: Request, exc: EmailAlreadyVeri
 async def user_not_found_handler(request: Request, exc: UserNotFoundException):
     logger.warning(f"User not found: {exc.detail}")
     return JSONResponse(status_code=404, content={"detail": exc.detail})
+
+async def invalid_auth_provider_handler(request: Request, exc: InvalidAuthProviderException):
+    logger.warning(f"Invalid authentication provider: {exc.detail}")
+    return JSONResponse(status_code=400, content={"detail": exc.detail})
+
+async def email_not_verified_handler(request: Request, exc: EmailNotVerifiedException):
+    logger.warning(f"Email not verified: {exc.detail}")
+    return JSONResponse(status_code=400, content={"detail": exc.detail})

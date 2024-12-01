@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.sessions import SessionMiddleware
 # from app.routers import customers, caregivers
 from app.auth import router as auth
 from app.database import engine, Base
@@ -19,6 +20,8 @@ app.add_exception_handler(UnapprovedCaregiverException, unapproved_caregiver_han
 app.add_exception_handler(InvalidTokenException, unapproved_caregiver_handler)
 app.add_exception_handler(EmailAlreadyVerifiedException, email_already_verified_handler)
 app.add_exception_handler(UserNotFoundException, user_not_found_handler)
+app.add_exception_handler(InvalidAuthProviderException, invalid_auth_provider_handler)
+app.add_exception_handler(EmailAlreadyVerifiedException, email_already_verified_handler)
 
 # Allow CORS (adjust origins in production)
 app.add_middleware(
@@ -27,6 +30,11 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+)
+
+app.add_middleware(
+    SessionMiddleware,
+    secret_key="your-secret-key",  # Replace with a secure random key in production
 )
 
 # Include routers

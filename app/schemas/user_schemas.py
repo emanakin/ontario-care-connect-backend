@@ -1,6 +1,7 @@
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional
 from enum import Enum
+from app.models.user_model import AuthProvider
 
 class LoginRequest(BaseModel):
     username: str
@@ -15,10 +16,13 @@ class UserBase(BaseModel):
     email: EmailStr
     full_name: Optional[str] = None
 
-class UserCreate(UserBase):
-    password: str = Field(..., min_length=8)
-    role: UserRole
-    is_verified: bool
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: Optional[str] = None
+    full_name: Optional[str] = None
+    role: str = 'customer'
+    is_verified: Optional[bool] = False
+    auth_provider: AuthProvider = AuthProvider.email
 
 class UserResponse(UserBase):
     id: int
